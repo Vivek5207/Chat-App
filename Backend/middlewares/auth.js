@@ -11,7 +11,6 @@ const isAuthenticated = TryCatch((req, res, next) => {
     return next(new ErrorHandler("Please login to access this route", 401));
 
   const decodedData = jwt.verify(token, process.env.JWT_SECRET);
-  // const decodedData = jwt.verify(token, "hello");
 
   req.user = decodedData._id;
 
@@ -25,7 +24,6 @@ const adminOnly = (req, res, next) => {
     return next(new ErrorHandler("Only Admin can access this route", 401));
 
   const secretKey = jwt.verify(token, process.env.JWT_SECRET);
-  // const secretKey = jwt.verify(token, "hello");
   ;
 
   const isMatched = secretKey === adminSecretKey;
@@ -46,7 +44,6 @@ const socketAuthenticator = async (err, socket, next) => {
       return next(new ErrorHandler("Please login to access this route", 401));
 
     const decodedData = jwt.verify(authToken, process.env.JWT_SECRET);
-    // const decodedData = jwt.verify(authToken, "hello");
     ;
 
     const user = await User.findById(decodedData._id);
